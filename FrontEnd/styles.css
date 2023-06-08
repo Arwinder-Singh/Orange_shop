@@ -1,0 +1,305 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffe8db;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #ff7f50 !important;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.navbar-nav {
+  margin-left: auto;
+}
+
+.nav-link {
+  color: #ffffff;
+}
+
+/* Welcome Section */
+.welcome-section {
+  background-color: #ffe8db;
+  padding: 80px 0;
+  text-align: center;
+}
+
+.welcome-section h1 {
+  font-size: 48px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #ff7f50;
+}
+
+.welcome-section button {
+  font-size: 18px;
+  padding: 12px 30px;
+  background-color: #ff7f50;
+  border-color: #ff7f50;
+  color: #ffffff;
+}
+
+/* About Section */
+.about-section {
+  padding: 80px 0;
+}
+
+.about-section .card {
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.about-section .card-img-top {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.about-section .card-body {
+  padding: 20px;
+}
+
+.about-section .card-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #ff7f50;
+}
+
+.about-section .card-text {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 15px;
+}
+
+/* Dashboard Section */
+.dashboard-section {
+  background-color: #ffe8db;
+  padding: 80px 0;
+}
+
+.dashboard-section .card {
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-section .card-body {
+  padding: 20px;
+}
+
+.dashboard-section .card-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #ff7f50;
+}
+
+.dashboard-section .card-text {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 15px;
+}
+
+.dashboard-section .btn-primary {
+  font-size: 18px;
+  padding: 12px 30px;
+  background-color: #ff7f50;
+  border-color: #ff7f50;
+  color: #ffffff;
+}
+
+/* Footer */
+.footer {
+  background-color: #ffe8db;
+  padding: 50px 0;
+  text-align: center;
+}
+
+.footer img {
+  max-width: 100%;
+}
+
+.footer p {
+  font-size: 16px;
+  color: #666666;
+  margin: 0;
+}
+
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffe8db;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #ff7f50;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.nav-link {
+  color: #ffffff;
+}
+
+/* Products Section */
+.products-section {
+  padding: 80px 0;
+}
+
+.products-section .section-heading {
+  font-size: 48px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.products-section .card {
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.products-section .card-img-top {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.products-section .card-body {
+  padding: 20px;
+}
+
+.products-section .card-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.products-section .card-text {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 15px;
+}
+
+.products-section .btn-primary {
+  font-size: 18px;
+  padding: 12px 30px;
+}
+
+/* Login Section */
+#login {
+  background-color: #f8f9fa;
+  padding: 80px 0;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-weight: bold;
+}
+
+.btn-primary {
+  background-color: #ff7f50;
+  border-color: #ff7f50;
+}
+
+.btn-primary:hover {
+  background-color: #e65c00;
+  border-color: #e65c00;
+}
+
+/* Dashboard Section */
+#dashboard {
+  background-color: #f8f9fa;
+  padding: 80px 0;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+#barGraph {
+  height: 300px;
+}
+
+/* Additional Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.py-5 {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mb-4 {
+  margin-bottom: 30px;
+}
+
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+.mt-4 {
+  margin-top: 20px;
+}
+
+.py-3 {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.text-center {
+  text-align: center;
+}
