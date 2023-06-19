@@ -22,6 +22,10 @@ body {
   margin-right: 20px;
 }
 
+.navbar-brand:hover {
+  color: #ffffff;
+}
+
 .navbar-nav .nav-link {
   color: #ffffff;
   transition: transform 0.3s, font-weight 0.3s;
