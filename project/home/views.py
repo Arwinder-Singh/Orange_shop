@@ -10,54 +10,78 @@ from mlxtend.frequent_patterns import fpgrowth
 from mlxtend.frequent_patterns import association_rules
 from mlxtend.preprocessing import TransactionEncoder
 
+from .models import User,Product,Billing,fpRecord,Fp,associationRecord,association
+
+from rich import print
 
 # Create your views here.
-def model(request):
-    # fm=billingForm()
+def model(data):
+    values=data
+    pro = [['Milk', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+           ['Dill', 'Onion', 'Nutmeg', 'Kidney Beans', 'Eggs', 'Yogurt'],
+           ['Milk', 'Apple', 'Kidney Beans', 'Eggs'],
+           ['Milk', 'Unicorn', 'Corn', 'Kidney Beans', 'Yogurt'],
+           ['Corn', 'Onion', 'Onion', 'Kidney Beans', 'Ice cream', 'Eggs']]
     
-    values=[]
-    top_30_items = pickle.load(open('top-30-items.pkl', 'rb'))
-    
-    print(type(top_30_items))
-    
+    # values=pro
        
     with open('fpgrowth-model.pkl', 'rb') as f:
         fp_model = pickle.load(f)
         
+    transaction = values 
+    
     te = TransactionEncoder()
-    te.fit(top_30_items)
-    if request.method=="POST":
+    te_ary = te.fit(values).transform(values)
+    
+    dataset = pd.DataFrame(te_ary, columns=te.columns_)
+     
+    recommendations = fpgrowth(dataset, min_support=0.6, use_colnames=True)
+     
+    obj=fpRecord()
+    # obj.save()
+    lastRecord=fpRecord.objects.all().last()
+    
+    for i  in recommendations.index:
+        support=recommendations.iloc[i]['support']
+        str=pickle.dumps(recommendations.iloc[i]['itemsets'])
         
-        input1=request.POST.get('p1')
-        input2=request.POST.get('p2')
-        input3=request.POST.get('p3')
-        input4=request.POST.get('p4')
-       
-        values.append(input1)
-        values.append(input2)
-        values.append(input3)
-        values.append(input4)
+        object=Fp(support=support,itemsets=str,key_id=lastRecord.id)
+        # object.save()
+   
+    # Create a dictionary to store itemsets and their related items
+
+    # res=set()
+    # d=[]
+    # for i  in recommendations.index:
+    #     # print(recommendations.iloc[i]['itemsets'])  
+    #     y=list(recommendations.iloc[i]['itemsets'])
+    #     if len(y)>1:
+    #         for j in y:
+    #         #    res.add(j)
+    #             pass    
+    #         print(y)
+               
+               
+    recommendations = association_rules(recommendations, metric='lift', min_threshold=1)
+    recommendationns = recommendations.sort_values('confidence', ascending=False)
+    print(recommendationns.to_string())
+    
+    associationObj=associationRecord(fpKey_id=lastRecord.id)
+    # associationObj.save()
+    
+    last=associationRecord.objects.all().last()
+    
+    for i  in recommendationns.index:
+        support=recommendations.iloc[i]['support']
+        confidence=recommendations.iloc[i]['confidence']
+        lift=recommendations.iloc[i]['lift']
+        antecedents=pickle.dumps(recommendations.iloc[i]['antecedents'])
+        consequents=pickle.dumps(recommendations.iloc[i]['consequents'])
         
-        print(values)
-        transaction = values 
-        print(top_30_items)
-        transaction = np.array(transaction)
-        print(transaction)
-        # TransactionEncoder
-        te = TransactionEncoder()
-        te_ary = te.fit(top_30_items).transform(transaction)
+        instance=association(antecedents=antecedents,consequents=consequents,support=support,confidence=confidence,lift=lift,key_id=last.id)
+        # instance.save()
         
-       
-        df = pd.DataFrame(te_ary, columns=te.columns_)
-        te_ary = te.transform(transaction)
-        df = pd.DataFrame(te_ary, columns=te.columns_)
         
-        recommendations = fpgrowth(df, min_support=0.05, use_colnames=True)
-        recommendations = association_rules(recommendations, metric='lift', min_threshold=1)
-        recommendations = recommendations.sort_values('confidence', ascending=False)
-        
-        print("result:----")
-        print(recommendations)
         
 def home(request):
     return render(request,'home.html')
@@ -106,4 +130,82 @@ def signup(request):
 def logout_request(request):
     logout(request)
     return redirect('home')
+
+def dashboard(request):
+    record=fpRecord.objects.all().last()
+    data=Fp.objects.filter(key_id=record.id)
+    itemsets=[]
+    support=[]
     
+    for i in data:
+        unpickle=pickle.loads(i.itemsets)
+        temp=[]
+        for a in unpickle:
+            temp.append(a)    
+        itemsets.append(temp)    
+        support.append(i.support) 
+       
+    info=zip(itemsets,support)  
+    
+    asso=associationRecord.objects.get(fpKey_id=record.id)
+    
+    associationData=association.objects.filter(key_id=asso.id)
+    antecedents=[]
+    consequents=[]
+    
+    for c in associationData:
+        antecedentsUnpickle=pickle.loads(c.antecedents)
+        consequentsUnpickle=pickle.loads(c.consequents)
+        temp=[]
+        for a in antecedentsUnpickle:
+            temp.append(a)    
+        antecedents.append(temp)
+        temp2=[]
+        for a in consequentsUnpickle:
+            temp2.append(a)    
+        consequents.append(temp2)
+        
+        table2=zip(antecedents,consequents,associationData)
+        
+    
+
+       
+      
+    return render(request,'dashboard.html',{"info":info,"table2":table2})
+
+def runModel(request):
+    bills=Billing.objects.all()
+    list=[]
+     
+    for bill in bills:
+        str=bill.bill
+        unpickle=pickle.loads(str)
+        list.append(unpickle)   
+    model(list)     
+    return redirect('dashboard')
+
+def bills(list):
+    bill=list 
+    
+    str=pickle.dumps(bill)
+    
+    obj=Billing(bill=str)
+    obj.save()
+    
+    
+    
+
+def product(request):
+    productList=Product.objects.all()
+    list=[]
+    
+    if request.method=="POST":
+        for product in productList:
+            pro=request.POST.get(product.productName)
+            if pro:
+                list.append(pro)
+            
+        
+        bills(list)
+        
+    return render(request,'product.html',{"productList":productList})
